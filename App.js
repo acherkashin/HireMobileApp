@@ -11,7 +11,7 @@ import {
   Text,
   View
 } from 'react-native';
-import NavBar from './Components/NavBar';
+import TabNavBar from './Components/TabNavBar';
 
 const instructions = Platform.select({
   ios: 'Press Cmd+R to reload,\n' +
@@ -23,7 +23,7 @@ const instructions = Platform.select({
 export default class App extends Component {
   render() {
     return (
-      <NavBar />
+      <TabNavBar />
     );
   }
 }

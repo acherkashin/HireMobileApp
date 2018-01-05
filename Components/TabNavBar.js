@@ -2,6 +2,7 @@ import React from 'react';
 import { View, Text } from 'react-native';
 import { TabNavigator } from 'react-navigation'; // 1.0.0-beta.14
 import Ionicons from 'react-native-vector-icons/Ionicons'; // 4.4.2
+import ToolsNavigator from './ToolsNavigator';
 
 const HomeScreen = () => (
   <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
@@ -15,7 +16,19 @@ const ProfileScreen = () => (
   </View>
 );
 
-const NavBar = TabNavigator({
+const TabNavBar = TabNavigator({
+  Tool: {
+    screen: ToolsNavigator,
+    navigationOptions: {
+      tabBarIcon: ({ tintColor, focused }) => (
+        <Ionicons
+          name={focused ? 'ios-build' : 'ios-build-outline'}
+          size={26}
+          style={{ color: tintColor }}
+        />
+      ),
+    },
+  },
   Home: {
     screen: HomeScreen,
     navigationOptions: {
@@ -43,9 +56,9 @@ const NavBar = TabNavigator({
 }, {
     tabBarPosition: 'bottom',
     tabBarOptions: {
-        showIcon: true,
-        showLabel: false,
+      showIcon: true,
+      showLabel: false,
     }
-});
+  });
 
-export default NavBar;
+export default TabNavBar;
