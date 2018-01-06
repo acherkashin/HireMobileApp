@@ -1,0 +1,1 @@
+After running android emulator need execute in console: `adb reverse tcp:56644 tcp:56644` 
