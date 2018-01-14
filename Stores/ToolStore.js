@@ -60,7 +60,17 @@ export default class ToolStore {
     }
 
     save(tool) {
-        //TODO: need to implement
+        return fetch(`http://localhost:56644/api/tool/`, {
+            method: 'POST',
+            body: JSON.stringify(tool.asJson),
+            headers: {
+                "Accept": "application/json",
+                "Content-Type": "application/json",
+            }
+        }).then(resp => resp.json())
+            .then((respTool) => {
+                this.updateToolFromServer(respTool);
+            });
     }
 }
 

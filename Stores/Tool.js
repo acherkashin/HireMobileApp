@@ -1,4 +1,5 @@
 import { observable, computed } from 'mobx';
+import Guid from "./../src/utils/guid-utils";
 
 export default class Tool {
     /**
@@ -14,13 +15,14 @@ export default class Tool {
 
     store = null;
 
-    constructor(store, id = '') {
+    constructor(store, id = Guid()) {
         this.store = store;
         this.id = id;
     }
 
     @computed get asJson() {
         return {
+            id: this.id,
             name: this.name,
             price: this.price,
             pledge: this.pledge,
@@ -30,7 +32,7 @@ export default class Tool {
     }
 
     save() {
-        this.store.save(this);
+        return this.store.save(this);
     }
 
     delete() {
