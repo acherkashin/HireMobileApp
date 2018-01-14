@@ -8,7 +8,8 @@ export default class ToolStore {
     @observable tools = [];
     @observable isLoading = false;
 
-    constructor() {
+    constructor(rootStore) {
+        this.rootStore = rootStore;
     }
 
     /**

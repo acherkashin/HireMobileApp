@@ -2,8 +2,7 @@ import React, { Component } from 'react';
 import { View, Text, TouchableOpacity, FlatList, StyleSheet } from 'react-native';
 import { TabNavigator } from 'react-navigation'; // 1.0.0-beta.14
 import { Icon, Button, List, ListItem } from 'react-native-elements';
-import ToolStore from './../../Stores/ToolStore';
-import { observer } from 'mobx-react';
+import { inject, observer } from 'mobx-react/native';
 
 const styles = StyleSheet.create({
     addButton: {
@@ -11,11 +10,14 @@ const styles = StyleSheet.create({
     }
 });
 
-@observer
+@inject('store') @observer
 export default class AllToolsScreen extends Component {
     constructor() {
         super();
-        this.toolStore = new ToolStore();
+    }
+
+    get toolStore() {
+        return this.props.store.toolStore;
     }
 
     componentDidMount() {
