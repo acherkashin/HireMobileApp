@@ -37,7 +37,11 @@ export default class AllToolsScreen extends Component {
                 size={40}
             />
         </TouchableOpacity>
-    })
+    });
+
+    onToolPress(tool) {
+        this.props.navigation.navigate('ToolScreen', { id: tool.id });
+    }
 
     render() {
         if (this.toolStore.isLoading) {
@@ -52,6 +56,7 @@ export default class AllToolsScreen extends Component {
                             roundAvatar
                             title={item.name}
                             subtitle={`Цена: ${item.price}`}
+                            onPress={() => { this.onToolPress(item) }}
                         />)} />
                 </List>
             );

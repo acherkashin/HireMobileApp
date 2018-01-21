@@ -13,6 +13,18 @@ export default class ToolStore {
         this.rootStore = rootStore;
     }
 
+    getById(id) {
+        let tool = this.tools.find(t => t.id === id);
+        if (!tool) {
+            runInAction(() => {
+                this.isLoading = true;
+            });
+            //do request to server
+        }
+
+        return new Promise((resolve) => { resolve(tool) });
+    }
+
     /**
      * Fetches all tool's from the server
      */
@@ -35,7 +47,7 @@ export default class ToolStore {
      * or remove an tool if it has been deleted on the server.
      */
     updateToolFromServer(json) {
-        var tool = this.tools.find(tool => tool.id === json.id);
+        let tool = this.tools.find(tool => tool.id === json.id);
         if (!tool) {
             tool = new Tool(this, json.id);
             this.tools.push(tool);

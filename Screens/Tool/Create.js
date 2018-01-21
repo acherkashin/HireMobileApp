@@ -44,7 +44,7 @@ export default class ToolCreateScreen extends Component {
         // Fictional function to save information in a store somewhere
         this.tool.save().then(() => {
             this.props.navigation.setParams({ isSaving: false });
-            this.props.navigation.navigate('AllTools');
+            this.props.navigation.navigate('ToolScreen');
         }).catch(() => {
             this.props.navigation.setParams({ isSaving: false });
         })
@@ -68,7 +68,7 @@ export default class ToolCreateScreen extends Component {
                 <View style={styles.container}>
                     <View>
                         <FormLabel>Наименование</FormLabel>
-                        <FormInput onChangeText={this.onTextChanged.bind(this)} value={name} placeholder={'Введите наименование товара...'} />
+                        <FormInput onChangeText={this.onTextChanged} value={name} placeholder={'Введите наименование товара...'} />
                         {/* <FormValidationMessage>{'This field is required'}</FormValidationMessage> */}
                     </View>
                     <View>
@@ -76,7 +76,7 @@ export default class ToolCreateScreen extends Component {
                         <FormInput
                             value={description}
                             placeholder={'Введите описание товара...'}
-                            onChangeText={this.onDescriptionChanged.bind(this)}
+                            onChangeText={this.onDescriptionChanged}
                             multiline={true}
                         />
                         {/* <FormValidationMessage>{'This field is required'}</FormValidationMessage> */}
@@ -84,40 +84,40 @@ export default class ToolCreateScreen extends Component {
                     <View>
                         <FormLabel>Цена</FormLabel>
                         <FormInput
-                            value={price}
+                            value={`${price}`}
                             placeholder={'Введите цену...'}
                             keyboardType={'numeric'}
-                            onChangeText={this.onPriceChanged.bind(this)}
+                            onChangeText={this.onPriceChanged}
                         />
                         {/* <FormValidationMessage>{'This field is required'}</FormValidationMessage> */}
                     </View>
                     <View>
                         <FormLabel>Залог</FormLabel>
                         <FormInput
-                            value={pledge}
+                            value={`${pledge}`}
                             keyboardType={'numeric'}
                             placeholder={'Введите размер залога...'}
-                            onChangeText={this.onPladgeChanged.bind(this)}
+                            onChangeText={this.onPladgeChanged}
                         />
                         {/* <FormValidationMessage>{'This field is required'}</FormValidationMessage> */}
                     </View>
                     <View>
                         <FormLabel>За сутки</FormLabel>
                         <FormInput
-                            value={dayPrice}
+                            value={`${dayPrice}`}
                             keyboardType={'numeric'}
                             placeholder={'Введите цену за сутки...'}
-                            onChangeText={this.onDayPriceChanged.bind(this)}
+                            onChangeText={this.onDayPriceChanged}
                         />
                         {/* <FormValidationMessage>{'This field is required'}</FormValidationMessage> */}
                     </View>
                     <View>
                         <FormLabel>За смену</FormLabel>
                         <FormInput
-                            value={workShiftPrice}
+                            value={`${workShiftPrice}`}
                             keyboardType={'numeric'}
                             placeholder={'Введите цену за смену...'}
-                            onChangeText={this.onWorkShiftPriceChanged.bind(this)}
+                            onChangeText={this.onWorkShiftPriceChanged}
                         />
                         {/* <FormValidationMessage>{'This field is required'}</FormValidationMessage> */}
                     </View>
