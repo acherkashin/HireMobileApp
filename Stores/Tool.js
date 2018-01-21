@@ -12,6 +12,7 @@ export default class Tool {
     @observable pledge = 0;
     @observable dayPrice = 0;
     @observable workShiftPrice = 0
+    @observable description = "";
 
     store = null;
 
@@ -28,6 +29,7 @@ export default class Tool {
             pledge: this.pledge,
             dayPrice: this.dayPrice,
             workShiftPrice: this.workShiftPrice,
+            description: this.description,
         };
     }
 
@@ -47,5 +49,6 @@ export default class Tool {
         this.pledge = json.pledge;
         this.dayPrice = json.dayPrice;
         this.workShiftPrice = json.workShiftPrice;
+        this.description = json.description;
     }
 }

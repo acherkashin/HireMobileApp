@@ -61,7 +61,5 @@ export default class AllToolsScreen extends Component {
                 </List>
             );
         }
-
-        console.log('AllTools rendered');
     }
 }
