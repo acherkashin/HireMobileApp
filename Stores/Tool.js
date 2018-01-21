@@ -1,4 +1,4 @@
-import { observable, computed } from 'mobx';
+import { observable, computed, action } from 'mobx';
 import Guid from "./../src/utils/guid-utils";
 
 export default class Tool {
@@ -41,7 +41,7 @@ export default class Tool {
     /**
      * Update this tool with information from the server
      */
-    updateFromJson(json) {
+    @action updateFromJson(json) {
         this.name = json.name;
         this.price = json.price;
         this.pledge = json.pledge;

@@ -1,5 +1,6 @@
-import { observable, autorun, action } from 'mobx';
+import { observable, autorun, action, runInAction } from 'mobx';
 import Tool from './Tool';
+import config from './../config';
 
 /**
  * @link https://mobx.js.org/best/store.html 
@@ -15,15 +16,17 @@ export default class ToolStore {
     /**
      * Fetches all tool's from the server
      */
-    loadTools() {
+    @action loadTools() {
         this.isLoading = true;
-        fetch('http://localhost:56644/api/tool')
+        fetch(`${config.URL_API}tool`)
             .then((resp) => resp.json())
-            .then(fetchedTools => {
+            .then(action('loadTools', fetchedTools => {
                 console.log(fetchedTools);
                 fetchedTools.forEach(json => this.updateToolFromServer(json));
                 this.isLoading = false;
-            });
+            })).catch(error => {
+                this.isLoading = false;
+            })
     }
 
     /**
@@ -52,7 +55,7 @@ export default class ToolStore {
      * A tool was somehow deleted, clean it from the client memory
      */
     removeTool(tool) {
-        fetch(`http://localhost:56644/api/tool/${tool.id}`, { method: 'DELETE' })
+        fetch(`${config.URL_API}tool/${tool.id}`, { method: 'DELETE' })
             .then((resp) => resp.json())
             .then(() => {
                 this.tools.splice(this.tools.indexOf(tool), 1);
@@ -60,7 +63,7 @@ export default class ToolStore {
     }
 
     save(tool) {
-        return fetch(`http://localhost:56644/api/tool/`, {
+        return fetch(`${config.URL_API}tool/`, {
             method: 'POST',
             body: JSON.stringify(tool.asJson),
             headers: {
