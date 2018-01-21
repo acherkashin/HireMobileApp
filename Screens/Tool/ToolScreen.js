@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, ScrollView, ActivityIndicator } from 'react-native';
-import { Icon, Button } from 'react-native-elements';
+import { Icon, Button, Divider } from 'react-native-elements';
 import { inject, observer } from 'mobx-react/native';
 import { observable, action, runInAction } from 'mobx';
+import InfoItem from './../../Components/InfoItem';
 
 @inject('store')
 @observer
@@ -18,6 +19,9 @@ export default class ToolScreen extends Component {
         return ({
             title: (params.tool && params.tool.name) || '',
             headerRight,
+            headerTitleStyle: {
+                fontSize: 14,
+            }
         })
     }
 
@@ -49,14 +53,15 @@ export default class ToolScreen extends Component {
         return <ScrollView>
             <View>
                 <View>
-                    <Text>{this.tool.name}</Text>
-                    <InfoItem label={'Цена'} value={price} />
-                    <InfoItem label={'Залог'} value={pledge} />
-                    <InfoItem label={'За сутки'} value={dayPrice} />
-                    <InfoItem label={'За смену'} value={workShiftPrice} />
-                    <View>
-                        <Text>Описание: </Text>
-                        <Text>{description}</Text>
+                    <View style={styles.header}>
+                        <Text style={styles.title}>{name}</Text>
+                    </View>
+                    <View style={styles.infoPanel}>
+                        <InfoItem label={'Цена'} value={price} />
+                        <InfoItem label={'Залог'} value={pledge} />
+                        <InfoItem label={'За сутки'} value={dayPrice} />
+                        <InfoItem label={'За смену'} value={workShiftPrice} />
+                        <InfoItem label={'Описание'} value={description} hideDevider={true} />
                     </View>
                 </View>
             </View>
@@ -64,9 +69,18 @@ export default class ToolScreen extends Component {
     };
 }
 
-const InfoItem = ({ label, value }) => (
-    <View style={{ flexDirection: 'row' }}>
-        <Text style={{ fontWeight: 'bold' }}>{label}: </Text>
-        <Text>{value}</Text>
-    </View>
-);
+const styles = StyleSheet.create({
+    infoPanel: {
+        backgroundColor: 'white'
+    },
+    header: {
+        height: 40,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    title: {
+        color: 'black',
+        fontSize: 14,
+        fontWeight: 'bold'
+    },
+});
