@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { View, Text, TouchableOpacity, FlatList, StyleSheet } from 'react-native';
 import { TabNavigator } from 'react-navigation'; // 1.0.0-beta.14
-import { Icon, Button, List, ListItem } from 'react-native-elements';
+import { Icon, List, ListItem } from 'react-native-elements';
 import { inject, observer } from 'mobx-react/native';
 
 const styles = StyleSheet.create({

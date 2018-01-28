@@ -6,9 +6,30 @@ import { inject, observer } from 'mobx-react/native';
 import { observable, action } from "mobx";
 import { FormLabel, FormInput, FormValidationMessage } from 'react-native-elements';
 
+const styles = StyleSheet.create({
+    addButton: {
+        marginRight: 10,
+    }
+});
+
 @inject('store')
 @observer
-export default class OrderCreateScreen extends Component {
+export default class AllOrdersScreen extends Component {
+    static navigationOptions = ({ navigation, screenProps }) => ({
+        title: 'Инструменты',
+        headerRight: <TouchableOpacity style={styles.addButton}
+            onPress={() => {
+                
+            }}>
+            <Icon
+                name='ios-add'
+                type='ionicon'
+                color='#517fa4'
+                size={40}
+            />
+        </TouchableOpacity>
+    });
+
     constructor() {
         super();
     }
@@ -24,7 +45,7 @@ export default class OrderCreateScreen extends Component {
     render() {
         return (
             <View>
-                <Text>OrderCreateScreen</Text>
+                <Text>AllOrdersScreen</Text>
             </View>
         );
     }

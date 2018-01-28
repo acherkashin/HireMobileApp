@@ -33,12 +33,12 @@ export default class ToolStore {
         fetch(`${config.URL_API}tool`)
             .then((resp) => resp.json())
             .then(action('loadTools', fetchedTools => {
-                console.log(fetchedTools);
                 fetchedTools.forEach(json => this.updateToolFromServer(json));
                 this.isLoading = false;
-            })).catch(error => {
+            })).catch(action('failToolsLoading', error => {
                 this.isLoading = false;
-            })
+                console.log(error);
+            }));
     }
 
     /**
