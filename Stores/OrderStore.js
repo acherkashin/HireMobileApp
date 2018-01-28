@@ -1,5 +1,5 @@
 import { observable, autorun, action, runInAction } from 'mobx';
-import Tool from './Tool';
+import Order from './Order';
 import config from './../config';
 import axios from 'axios';
 
@@ -26,10 +26,20 @@ export default class OrderStore {
         this.isLoading = true;
 
         instance.get('actives').then(action('getActivesOrdersSuccessfully', responce => {
-            this.orders = responce;
+            const orders = responce.data;
+            orders.forEach(order => this.updateOrderFromServer(order));
         })).catch(action('getActiveOrdersFailed', error => {
             console.log(error);
         }))
     }
 
+    updateOrderFromServer(json) {
+        let order = this.orders.find(order => order.id === json.id);
+        if (!order) {
+            order = new Order(this, json.id);
+            this.orders.push(order);
+        }
+
+        order.updateFromJson(json);
+    }
 }
