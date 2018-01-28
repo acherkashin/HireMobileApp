@@ -4,7 +4,7 @@ import { TabNavigator } from 'react-navigation';
 import { Icon, Button } from 'react-native-elements';
 import { inject, observer } from 'mobx-react/native';
 import { observable, action } from "mobx";
-import { FormLabel, FormInput, FormValidationMessage, SearchBar, List, ListItem } from 'react-native-elements';
+import { SearchBar, List, ListItem } from 'react-native-elements';
 
 const styles = StyleSheet.create({
     addButton: {
@@ -46,8 +46,8 @@ export default class AllOrdersScreen extends Component {
 
     }
 
-    onChangeText() {
-
+    @action onChangeText(text) {
+        this.orderStore.searchString = text;
     }
 
     render() {
@@ -62,7 +62,7 @@ export default class AllOrdersScreen extends Component {
                     placeholder='Type Here...' />
                 <List containerStyle={{ flex: 1, marginTop: 0 }}>
                     <FlatList
-                        data={this.orderStore.orders}
+                        data={this.orderStore.filteredOrders}
                         keyExtractor={(item) => item.id}
                         renderItem={({ item }) => (<ListItem
                             roundAvatar

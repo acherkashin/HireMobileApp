@@ -1,4 +1,4 @@
-import { observable, autorun, action, runInAction } from 'mobx';
+import { observable, autorun, action, runInAction, computed } from 'mobx';
 import Order from './Order';
 import config from './../config';
 import axios from 'axios';
@@ -17,6 +17,12 @@ export default class OrderStore {
 
     constructor(rootStore) {
         this.rootStore = rootStore;
+    }
+
+    @observable searchString = '';
+
+    @computed get filteredOrders() {
+        return this.orders.filter(order => order.clientName && order.clientName.indexOf(this.searchString) !== -1 );
     }
 
     /**
