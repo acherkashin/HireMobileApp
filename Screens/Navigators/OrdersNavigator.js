@@ -1,7 +1,5 @@
 import { StackNavigator } from 'react-navigation';
-import OrderCreateScreen from './../Screens/Order/OrderCreateScreen';
-import AllOrdersScreen from './../Screens/Order/AllOrdersScreen';
-import OrderScreen from './../Screens/Order/OrderScreen';
+import { OrderCreateScreen, AllOrdersScreen, OrderScreen } from './../Order/index';
 
 export default StackNavigator(
     {

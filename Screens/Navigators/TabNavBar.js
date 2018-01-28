@@ -2,8 +2,7 @@ import React from 'react';
 import { View, Text } from 'react-native';
 import { TabNavigator } from 'react-navigation';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import ToolsNavigator from './ToolsNavigator';
-import OrdersNavigator from './OrdersNavigator';
+import { ToolsNavigator, OrdersNavigator } from './index';
 
 const TabNavBar = TabNavigator({
   Tool: {

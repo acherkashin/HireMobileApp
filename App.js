@@ -13,7 +13,7 @@ import {
 } from 'react-native';
 import { Provider as MobXProvider, observer } from 'mobx-react/native';
 import RootStore from './Stores/RootStore';
-import TabNavBar from './Components/TabNavBar';
+import TabNavBar from './Screens/Navigators/TabNavBar';
 
 @observer
 export default class App extends Component {
