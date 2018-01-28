@@ -43,7 +43,7 @@ export default class AllOrdersScreen extends Component {
     }
 
     onOrderPress(order) {
-
+        this.props.navigation.navigate('OrderScreen', { id: order.id });
     }
 
     @action onChangeText(text) {

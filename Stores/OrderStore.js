@@ -22,7 +22,19 @@ export default class OrderStore {
     @observable searchString = '';
 
     @computed get filteredOrders() {
-        return this.orders.filter(order => order.clientName && order.clientName.indexOf(this.searchString) !== -1 );
+        return this.orders.filter(order => order.clientName && order.clientName.indexOf(this.searchString) !== -1);
+    }
+
+    getById(id) {
+        let order = this.orders.find(t => t.id === id);
+        if (!order) {
+            runInAction(() => {
+                this.isLoading = true;
+            });
+            //do request to server
+        }
+
+        return new Promise((resolve) => { resolve(order) });
     }
 
     /**

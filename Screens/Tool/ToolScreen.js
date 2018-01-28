@@ -52,17 +52,15 @@ export default class ToolScreen extends Component {
 
         return <ScrollView>
             <View>
-                <View>
-                    <View style={styles.header}>
-                        <Text style={styles.title}>{name}</Text>
-                    </View>
-                    <View style={styles.infoPanel}>
-                        <InfoItem label={'Цена'} value={price} />
-                        <InfoItem label={'Залог'} value={pledge} />
-                        <InfoItem label={'За сутки'} value={dayPrice} />
-                        <InfoItem label={'За смену'} value={workShiftPrice} />
-                        <InfoItem label={'Описание'} value={description} hideDevider={true} />
-                    </View>
+                <View style={styles.header}>
+                    <Text style={styles.title}>{name}</Text>
+                </View>
+                <View style={styles.infoPanel}>
+                    <InfoItem label={'Цена'} value={price} />
+                    <InfoItem label={'Залог'} value={pledge} />
+                    <InfoItem label={'За сутки'} value={dayPrice} />
+                    <InfoItem label={'За смену'} value={workShiftPrice} />
+                    <InfoItem label={'Описание'} value={description} hideDevider={true} />
                 </View>
             </View>
         </ScrollView>
