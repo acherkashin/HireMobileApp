@@ -5,6 +5,7 @@ import { Icon, Button } from 'react-native-elements';
 import { inject, observer } from 'mobx-react/native';
 import { observable, action } from "mobx";
 import { FormLabel, FormInput, FormValidationMessage } from 'react-native-elements';
+import { TextEditor } from './../../Components';
 
 @inject('store')
 @observer
@@ -77,42 +78,12 @@ export default class OrderCreateScreen extends Component {
                     {/* <FormInput containerStyle={styles.inputContainer} onChangeText={this.onTextChanged} value={name} placeholder={'Введите наименование товара...'} /> */}
                     {/* <FormValidationMessage>{'This field is required'}</FormValidationMessage> */}
                 </View>
-                <View style={styles.editor}>
-                    <FormLabel containerStyle={styles.labelContainer}>Клиент</FormLabel>
-                    <FormInput containerStyle={styles.inputContainer}
-                        value={clientName}
-                        placeholder={'Введите имя клиента ...'}
-                        onChangeText={this.onClientChanged}
-                    />
-                    {/* <FormValidationMessage>{'This field is required'}</FormValidationMessage> */}
-                </View>
-                <View style={styles.editor}>
-                    <FormLabel containerStyle={styles.labelContainer}>Телефон</FormLabel>
-                    <FormInput containerStyle={styles.inputContainer}
-                        value={clientPhoneNumber}
-                        placeholder={'Введите телефон клиента ...'}
-                        onChangeText={this.onPhoneChanged}
-                    />
-                    {/* <FormValidationMessage>{'This field is required'}</FormValidationMessage> */}
-                </View>
-                <View style={styles.editor}>
-                    <FormLabel containerStyle={styles.labelContainer}>Договор</FormLabel>
-                    <FormInput containerStyle={styles.inputContainer}
-                        value={contractNumber}
-                        placeholder={'Введите номер договора ...'}
-                        onChangeText={this.onContractNumberChanged}
-                    />
-                    {/* <FormValidationMessage>{'This field is required'}</FormValidationMessage> */}
-                </View>
-                <View style={styles.editor}>
-                    <FormLabel containerStyle={styles.labelContainer}>Залог</FormLabel>
-                    <FormInput containerStyle={styles.inputContainer}
-                        value={paidPledge}
-                        placeholder={'Введите сумму залога ...'}
-                        onChangeText={this.onPledgeChanged}
-                    />
-                    {/* <FormValidationMessage>{'This field is required'}</FormValidationMessage> */}
-                </View>
+
+                <TextEditor label={'Клиент'} value={clientName} placeholder={'Введите имя клиента ...'} onChangeText={this.onClientChanged} />
+                <TextEditor label={'Телефон'} value={clientPhoneNumber} placeholder={'Введите телефон клиента ...'} onChangeText={this.onPhoneChanged} />
+                <TextEditor label={'Договор'} value={contractNumber} placeholder={'Введите номер договора ...'} onChangeText={this.onContractNumberChanged} />
+                <TextEditor label={'Залог'} value={paidPledge} placeholder={'Введите сумму залога ...'} onChangeText={this.onPledgeChanged} />
+
                 <View>
                     <FormLabel>Примечание</FormLabel>
                     <FormInput containerStyle={styles.inputContainer}
@@ -134,14 +105,8 @@ const styles = StyleSheet.create({
         flexDirection: 'column',
         backgroundColor: 'white',
     },
-    editor: {
-        flexDirection: 'row',
-    },
-    labelContainer: {
-        flex: 2,
-    },
+
     inputContainer: {
-        flex: 5,
         borderBottomColor: '#bbb',
         borderBottomWidth: StyleSheet.hairlineWidth,
     }
