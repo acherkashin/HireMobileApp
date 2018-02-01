@@ -28,7 +28,7 @@ export default class AllToolsScreen extends Component {
         title: 'Инструменты',
         headerRight: <TouchableOpacity style={styles.addButton}
             onPress={() => {
-                navigation.navigate('Create')
+                navigation.navigate('ToolCreateScreen')
             }}>
             <Icon
                 name='ios-add'

@@ -19,7 +19,7 @@ export default class AllOrdersScreen extends Component {
         title: 'Активные заказы',
         headerRight: <TouchableOpacity style={styles.addButton}
             onPress={() => {
-
+                navigation.navigate('OrderCreateScreen');
             }}>
             <Icon
                 name='ios-add'

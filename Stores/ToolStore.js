@@ -55,9 +55,7 @@ export default class ToolStore {
 
         tool.updateFromJson(json);
     }
-    /**
-     * Creates a fresh tool on the client and server
-     */
+
     createTool() {
         const tool = new Tool(this);
         this.tools.push(tool);

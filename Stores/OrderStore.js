@@ -25,6 +25,12 @@ export default class OrderStore {
         return this.orders.filter(order => order.clientName && order.clientName.indexOf(this.searchString) !== -1);
     }
 
+    createOrder() {
+        const order = new Order(this);
+        this.orders.push(order);
+        return order;
+    }
+
     getById(id) {
         let order = this.orders.find(t => t.id === id);
         if (!order) {
