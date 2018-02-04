@@ -11,7 +11,7 @@ const styles = StyleSheet.create({
 });
 
 @inject('store') @observer
-export default class AllToolsScreen extends Component {
+export default class SelectToolScreen extends Component {
     constructor() {
         super();
     }
@@ -25,17 +25,12 @@ export default class AllToolsScreen extends Component {
     }
 
     static navigationOptions = ({ navigation, screenProps }) => ({
-        title: 'Инструменты',
-        headerRight: <TouchableOpacity style={styles.addButton}
+        title: 'Выбрать инструмент',
+        headerRight: <TouchableOpacity
             onPress={() => {
-                navigation.navigate('ToolCreateScreen')
+                navigation.goBack();
             }}>
-            <Icon
-                name='ios-add'
-                type='ionicon'
-                color='#517fa4'
-                size={40}
-            />
+            <Text>Отменить</Text>
         </TouchableOpacity>
     });
 
@@ -56,7 +51,8 @@ export default class AllToolsScreen extends Component {
     }
 
     onToolPress(tool) {
-        this.props.navigation.navigate('ToolScreen', { id: tool.id });
+        this.props.navigation.state.params.selectTool(tool);
+        this.props.navigation.goBack();
     }
 
     render() {

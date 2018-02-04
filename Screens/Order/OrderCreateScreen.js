@@ -68,6 +68,17 @@ export default class OrderCreateScreen extends Component {
         this.order.description = description;
     }
 
+    @action.bound
+    onToolChanged(tool) {
+        this.order.tool = tool;
+    }
+
+    selectTool() {
+        this.props.navigation.navigate('SelectToolScreen', {
+            selectTool: this.onToolChanged
+        })
+    }
+
     render() {
         const { clientName, clientPhoneNumber, contractNumber, description, paidPledge } = this.order;
 
@@ -75,7 +86,14 @@ export default class OrderCreateScreen extends Component {
             <ScrollView style={styles.container}>
                 <View style={styles.editor}>
                     <FormLabel containerStyle={styles.labelContainer}>Инструмент</FormLabel>
-                    {/* <FormInput containerStyle={styles.inputContainer} onChangeText={this.onTextChanged} value={name} placeholder={'Введите наименование товара...'} /> */}
+                    <TouchableOpacity onPress={this.selectTool.bind(this)}>
+                        <FormInput containerStyle={styles.inputContainer}
+                            pointerEvents="none"
+                            placeholder={'Введите наименование товара...'}
+                            editable={false}
+                            value={this.order.tool && this.order.tool.name || ''}
+                        />
+                    </TouchableOpacity>
                     {/* <FormValidationMessage>{'This field is required'}</FormValidationMessage> */}
                 </View>
 
