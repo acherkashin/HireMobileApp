@@ -20,7 +20,7 @@ export default class AllToolsScreen extends Component {
         return this.props.store.toolStore;
     }
 
-    componentDidMount() {
+    componentWillMount() {
         this.toolStore.loadTools();
     }
 
@@ -39,27 +39,42 @@ export default class AllToolsScreen extends Component {
         </TouchableOpacity>
     });
 
+    onRefresh = () => {
+        this.toolStore.loadTools();
+    }
+
+    noComponents = () => {
+        let text = "Инструменты не найдены";
+
+        if (this.toolStore.isLoading) {
+            text = "Загрузка...";
+        }
+
+        return <View>
+            <Text>{text}</Text>
+        </View>;
+    }
+
     onToolPress(tool) {
         this.props.navigation.navigate('ToolScreen', { id: tool.id });
     }
 
     render() {
-        if (this.toolStore.isLoading) {
-            return (<Text>Загрузка ...</Text>)
-        } else {
-            return (
-                <List containerStyle={{ flex: 1, marginTop: 0 }}>
-                    <FlatList
-                        data={this.toolStore.tools}
-                        keyExtractor={(item) => item.id}
-                        renderItem={({ item }) => (<ListItem
-                            roundAvatar
-                            title={item.name}
-                            subtitle={`Цена: ${item.price}`}
-                            onPress={() => { this.onToolPress(item) }}
-                        />)} />
-                </List>
-            );
-        }
+        return (
+            <List containerStyle={{ flex: 1, marginTop: 0 }}>
+                <FlatList
+                    keyExtractor={(item) => item.id}
+                    refreshing={this.toolStore.isLoading}
+                    onRefresh={() => this.onRefresh()}
+                    ListEmptyComponent={this.noComponents}
+                    renderItem={({ item }) => (<ListItem
+                        roundAvatar
+                        title={item.name}
+                        subtitle={`Цена: ${item.price}`}
+                        onPress={() => { this.onToolPress(item) }}
+                    />)}
+                />
+            </List>
+        );
     }
 }
