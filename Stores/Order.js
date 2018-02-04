@@ -3,27 +3,31 @@ import Guid from "./../src/utils/guid-utils";
 
 export default class Order {
     /**
-* unique id of this tool, immutable.
-*/
+    * unique id of this tool, immutable.
+    */
     id = null;
 
-    @observable tool = "";
-    @observable clientName = "";
-    @observable clientPhoneNumber = "";
-    @observable contractNumber = "";
-    @observable description = "";
-    @observable paidPledge = "";
-    @observable price = "";
-    @observable startDate = "";
-    @observable createdBy = "";
-    @observable endDate = "";
-    @observable payment = "";
+    @observable tool;
+    @observable clientName;
+    @observable clientPhoneNumber;
+    @observable contractNumber;
+    @observable description;
+    @observable paidPledge;
+    @observable price;
+    @observable startDate;
+    @observable createdBy;
+    @observable endDate;
+    @observable payment;
 
     store = null;
 
     constructor(store, id = Guid()) {
         this.store = store;
         this.id = id;
+    }
+
+    save() {
+        return this.store.save(this);
     }
 
     /**
@@ -60,7 +64,7 @@ export default class Order {
             createdBy: this.createdBy,
             endDate: this.endDate,
             payment: this.payment,
-            toolId: this.tool.id,
+            toolID: this.tool && this.tool.id,
         };
     }
 }

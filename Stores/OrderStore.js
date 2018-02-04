@@ -3,8 +3,8 @@ import Order from './Order';
 import config from './../config';
 import axios from 'axios';
 
-const instance = axios.create({
-    baseURL: `${config.URL_API}order/`,
+const api = axios.create({
+    baseURL: `${config.URL_API}order`,
     headers: {
         "Accept": "application/json",
         "Content-Type": "application/json",
@@ -49,12 +49,21 @@ export default class OrderStore {
     @action loadActiveOrders() {
         this.isLoading = true;
 
-        instance.get('actives').then(action('getActivesOrdersSuccessfully', responce => {
+        return api.get('actives').then(action('getActivesOrdersSuccessfully', responce => {
             const orders = responce.data;
             orders.forEach(order => this.updateOrderFromServer(order));
         })).catch(action('getActiveOrdersFailed', error => {
             console.log(error);
         }))
+    }
+
+    @action save(tool) {
+        return api.post('', tool.asJson).then(action('saveToolSuccessefully'), response => {
+            //add checking status code. Why 400 is ok???
+            this.updateToolFromServer(response.data)
+        }).catch(action('saveToolFaild'), response => {
+            console.error(response);
+        });
     }
 
     updateOrderFromServer(json) {

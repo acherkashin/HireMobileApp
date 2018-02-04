@@ -11,6 +11,7 @@ export default class TextEditor extends Component {
                     value={this.props.value}
                     placeholder={this.props.placeholder}
                     onChangeText={this.props.onChangeText}
+                    multiline={true}
                 />
                 {/* <FormValidationMessage>{'This field is required'}</FormValidationMessage> */}
             </View>
@@ -19,16 +20,9 @@ export default class TextEditor extends Component {
 }
 
 const styles = StyleSheet.create({
-    editor: {
-        flexDirection: 'row',
-    },
     labelContainer: {
-        flex: 2,
     },
     inputContainer: {
-        flex: 5,
-        marginLeft: 0,
-        marginRight: 0,
         borderBottomColor: '#bbb',
         borderBottomWidth: StyleSheet.hairlineWidth,
     }

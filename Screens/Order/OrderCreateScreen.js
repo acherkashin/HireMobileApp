@@ -5,7 +5,7 @@ import { Icon, Button } from 'react-native-elements';
 import { inject, observer } from 'mobx-react/native';
 import { observable, action } from "mobx";
 import { FormLabel, FormInput, FormValidationMessage } from 'react-native-elements';
-import { TextEditor } from './../../Components';
+import { TextEditor, LongTextEditor, LabelValue } from './../../Components';
 
 @inject('store')
 @observer
@@ -34,12 +34,31 @@ export default class OrderCreateScreen extends Component {
         super();
     }
 
-
     get orderStore() {
         return this.props.store.orderStore;
     }
 
-    @action componentWillMount() {
+    _handleSave = () => {
+        // Update state, show ActivityIndicator
+        this.props.navigation.setParams({ isSaving: true });
+
+        this.order.save().then(() => {
+            this.props.navigation.setParams({ isSaving: false });
+            // this.props.navigation.navigate('OrderScreen');
+        }).catch(() => {
+            this.props.navigation.setParams({ isSaving: false });
+        });
+    }
+
+    @action
+    componentDidMount() {
+        this.tool = this.orderStore.createOrder();
+        // We can only set the function after the component has been initialized
+        this.props.navigation.setParams({ handleSave: this._handleSave });
+    }
+
+    @action
+    componentWillMount() {
         this.order = this.orderStore.createOrder();
     }
 
@@ -50,7 +69,7 @@ export default class OrderCreateScreen extends Component {
 
     @action.bound
     onPhoneChanged(phone) {
-        this.order.phone = phone;
+        this.order.clientPhoneNumber = phone;
     }
 
     @action.bound
@@ -60,7 +79,7 @@ export default class OrderCreateScreen extends Component {
 
     @action.bound
     onPledgeChanged(pledge) {
-        this.order.paidPledge = pledge;
+        this.order.paidPledge = parseFloat(pledge) || 0;
     }
 
     @action.bound
@@ -83,35 +102,13 @@ export default class OrderCreateScreen extends Component {
         const { clientName, clientPhoneNumber, contractNumber, description, paidPledge } = this.order;
 
         return (
-            <ScrollView style={styles.container}>
-                <View style={styles.editor}>
-                    <FormLabel containerStyle={styles.labelContainer}>Инструмент</FormLabel>
-                    <TouchableOpacity onPress={this.selectTool.bind(this)}>
-                        <FormInput containerStyle={styles.inputContainer}
-                            pointerEvents="none"
-                            placeholder={'Введите наименование товара...'}
-                            editable={false}
-                            value={this.order.tool && this.order.tool.name || ''}
-                        />
-                    </TouchableOpacity>
-                    {/* <FormValidationMessage>{'This field is required'}</FormValidationMessage> */}
-                </View>
-
+            <ScrollView onPress={this.selectTool.bind(this)} style={styles.container}>
+                <LabelValue label={'Инструмент'} value={this.order.tool && this.order.tool.name || ''} placeholder={'Выберите инструмент'} onPress={this.selectTool.bind(this)} />
                 <TextEditor label={'Клиент'} value={clientName} placeholder={'Введите имя клиента ...'} onChangeText={this.onClientChanged} />
                 <TextEditor label={'Телефон'} value={clientPhoneNumber} placeholder={'Введите телефон клиента ...'} onChangeText={this.onPhoneChanged} />
                 <TextEditor label={'Договор'} value={contractNumber} placeholder={'Введите номер договора ...'} onChangeText={this.onContractNumberChanged} />
                 <TextEditor label={'Залог'} value={paidPledge} placeholder={'Введите сумму залога ...'} onChangeText={this.onPledgeChanged} />
-
-                <View>
-                    <FormLabel>Примечание</FormLabel>
-                    <FormInput containerStyle={styles.inputContainer}
-                        value={description}
-                        placeholder={'Введите примечание ...'}
-                        onChangeText={this.onDescriptionChanged}
-                        multiline={true}
-                    />
-                    {/* <FormValidationMessage>{'This field is required'}</FormValidationMessage> */}
-                </View>
+                <LongTextEditor label={'Примечание'} value={description} placeholder={'Введите примечание ...'} onChangeText={this.onDescriptionChanged} />
             </ScrollView>
         );
     }
@@ -123,8 +120,14 @@ const styles = StyleSheet.create({
         flexDirection: 'column',
         backgroundColor: 'white',
     },
-
+    editor: {
+        flexDirection: 'row',
+    },
+    labelContainer: {
+        flex: 2,
+    },
     inputContainer: {
+        flex: 5,
         borderBottomColor: '#bbb',
         borderBottomWidth: StyleSheet.hairlineWidth,
     }
