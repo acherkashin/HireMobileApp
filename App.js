@@ -19,7 +19,7 @@ import TabNavBar from './Screens/Navigators/TabNavBar';
 export default class App extends Component {
   render() {
     return (
-      <MobXProvider store={new RootStore()}>
+      <MobXProvider store={RootStore}>
         <TabNavBar />
       </MobXProvider>
     );

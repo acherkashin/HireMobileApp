@@ -18,6 +18,7 @@ export default class Order {
     @observable createdBy;
     @observable endDate;
     @observable payment;
+    @observable isClosed;
 
     store = null;
 
@@ -44,10 +45,11 @@ export default class Order {
         this.createdBy = json.createdBy;
         this.endDate = json.endDate;
         this.payment = json.payment;
+        this.isClosed = json.isClosed;
         if (json.tool) {
             this.tool = json.tool;
         } else {
-            this.tool = await this.store.toolStore.getById(json.toolID);
+            this.tool = await this.store.rootStore.toolStore.getById(json.toolID);
         }
     }
 
@@ -65,6 +67,7 @@ export default class Order {
             endDate: this.endDate,
             payment: this.payment,
             toolID: this.tool && this.tool.id,
+            isClosed: this.isClosed
         };
     }
 }

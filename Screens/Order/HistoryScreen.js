@@ -12,22 +12,11 @@ const styles = StyleSheet.create({
     }
 });
 
- @inject('store')
+@inject('store')
 @observer
-export default class AllOrdersScreen extends Component {
+export default class HistoryScreen extends Component {
     static navigationOptions = ({ navigation, screenProps }) => ({
-        title: 'Активные заказы',
-        headerRight: <TouchableOpacity style={styles.addButton}
-            onPress={() => {
-                navigation.navigate('OrderCreateScreen');
-            }}>
-            <Icon
-                name='ios-add'
-                type='ionicon'
-                color='#517fa4'
-                size={40}
-            />
-        </TouchableOpacity>
+        title: 'История'        
     });
 
     constructor() {
@@ -39,7 +28,7 @@ export default class AllOrdersScreen extends Component {
     }
 
     componentDidMount() {
-        this.orderStore.loadActiveOrders();
+        this.orderStore.loadHistory();
     }
 
     onOrderPress(order) {
@@ -62,7 +51,7 @@ export default class AllOrdersScreen extends Component {
                     placeholder='Type Here...' />
                 <List containerStyle={{ flex: 1, marginTop: 0 }}>
                     <FlatList
-                        data={this.orderStore.filteredOrders}
+                        data={this.orderStore.historyOrders}
                         keyExtractor={(item) => item.id}
                         renderItem={({ item }) => (<ListItem
                             roundAvatar

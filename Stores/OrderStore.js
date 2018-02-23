@@ -25,6 +25,13 @@ export default class OrderStore {
         return this.orders.filter(order => order.clientName && order.clientName.indexOf(this.searchString) !== -1);
     }
 
+    @computed get activeOrders() {
+        return this.orders.filter(order => !order.isClosed);
+    }
+    @computed get historyOrders() {
+        return this.orders.filter(order => order.isClosed);
+    }
+
     createOrder() {
         const order = new Order(this);
         this.orders.push(order);
@@ -44,7 +51,7 @@ export default class OrderStore {
     }
 
     /**
-     * Fetches all order's from the server
+     * Fetches active order's from the server
      */
     @action loadActiveOrders() {
         this.isLoading = true;
@@ -53,6 +60,20 @@ export default class OrderStore {
             const orders = responce.data;
             orders.forEach(order => this.updateOrderFromServer(order));
         })).catch(action('getActiveOrdersFailed', error => {
+            console.log(error);
+        }))
+    }
+
+    /**
+     * Fetches history from the server
+     */
+    @action loadHistory() {
+        this.isLoading = true;
+
+        return api.get('history').then(action('getHistorySuccessfully', responce => {
+            const orders = responce.data;
+            orders.forEach(order => this.updateOrderFromServer(order));
+        })).catch(action('getHistoryFailed', error => {
             console.log(error);
         }))
     }
